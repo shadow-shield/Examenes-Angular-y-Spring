@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.commons.examenes.models.entity.Examen;
 import com.example.microservicios.genericAlumnos.models.entity.Alumno;
 
 @Entity
@@ -25,7 +26,8 @@ public class Cursos {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Alumno> alumnos;
 
-
+	@ManyToMany(fetch = FetchType.LAZY)
+    private List<Examen>examenes;
 
 	public void prePersist(){
 		this.createAt = new Date();
@@ -33,6 +35,7 @@ public class Cursos {
 	
 	public Cursos() {
 		this.alumnos=new ArrayList<>();
+		this.examenes=new ArrayList<>();
 	}
 
 
@@ -74,5 +77,22 @@ public class Cursos {
 	public void removeAlumno(Alumno alumno){
 		this.alumnos.remove(alumno);
 	}
+
+	public List<Examen> getExamenes() {
+		return examenes;
+	}
+
+	public void setExamenes(List<Examen> examenes) {
+		this.examenes = examenes;
+	}
+	public void addExamen(Examen examene) {
+		this.examenes.add(examene);
+	}
+	
+	public void removeExamenes(Examen examene) {
+		this.examenes.remove(examene);
+	}
+	
+	
 
 }

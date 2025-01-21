@@ -24,6 +24,11 @@ public class Examen {
 	@OneToMany(mappedBy = "examen",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pregunta> preguntas;
 
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Asignatura asignatura;
+	
+	
 	public Examen() {
 		this.preguntas=new ArrayList<>();
 	}
@@ -74,6 +79,32 @@ public class Examen {
 		this.preguntas.remove(pregunta);
 		pregunta.setExamen(null);
 
+	}
+	
+	
+	
+	public Asignatura getAsignatura() {
+		return asignatura;
+	}
+
+
+	public void setAsignatura(Asignatura asignatura) {
+		this.asignatura = asignatura;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this==obj) {
+			return true;
+		}
+
+		if(!(obj instanceof Examen)) {
+			return false;
+		}
+		Examen exa =(Examen) obj;
+
+		return this.id != null && this.id.equals(exa.getId());
 	}
 
 

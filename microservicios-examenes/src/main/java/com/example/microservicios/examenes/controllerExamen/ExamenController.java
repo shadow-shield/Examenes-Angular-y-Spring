@@ -2,13 +2,14 @@ package com.example.microservicios.examenes.controllerExamen;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.microservicios.examenes.models.entity.Examen;
+import com.example.commons.examenes.models.entity.Examen;
 
 import com.example.microservicios.examenes.services.ExamenService;
 import com.example.microservicios.genericos.Gcontroller.GController;
@@ -39,5 +40,18 @@ public class ExamenController extends GController<Examen,ExamenService> {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(examenDb));
 	}
 	
-
+	@GetMapping("/filtrar/{term}")
+	public ResponseEntity<?>filtrarExamen(@PathVariable String term){
+		return ResponseEntity.ok(service.findByNombre(term));
+		
+	}
+	
+	@GetMapping("/asignaturas")
+	public ResponseEntity<?>listarAsignaturas(){
+		return ResponseEntity.ok(service.findAllAsignaturas());
+		
+	}
+	
+	
+	
 }

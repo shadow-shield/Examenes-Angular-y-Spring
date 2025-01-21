@@ -2,11 +2,17 @@ package com.example.microservicios.genericos.Gcontroller;
 
 
 import com.example.microservicios.genericos.Gservices.ServiceGenericos;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -21,7 +27,7 @@ public class GController <E, S extends ServiceGenericos<E>>{
    }
 
    @GetMapping("/genericget/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
        Optional<E> a = service.findById(id);
        if (a.isEmpty()) {
            return ResponseEntity.notFound().build();
@@ -31,7 +37,7 @@ public class GController <E, S extends ServiceGenericos<E>>{
    
    
    @PostMapping("/genericadd")
-    public ResponseEntity<?> createUser(@RequestBody E entity) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody E entity,BindingResult result) {
        E a = service.save(entity);
        return ResponseEntity.status(HttpStatus.CREATED).body(a);
 
@@ -46,6 +52,15 @@ public class GController <E, S extends ServiceGenericos<E>>{
        service.delete(id);
        return ResponseEntity.noContent().build();
 
+   }
+   
+   protected ResponseEntity<?>validar(BindingResult result){
+	   Map<String, Object>errores= new HashMap<>();
+	   result.getFieldErrors().forEach(err->{
+		   errores.put(err.getField(), "El campo "+err.getField()+ "  "+err.getDefaultMessage());
+	   });
+	   
+	   return ResponseEntity.badRequest().body(errores);
    }
 
 }

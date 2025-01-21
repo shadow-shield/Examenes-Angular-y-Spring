@@ -3,6 +3,7 @@ package com.example.microservicios.genericAlumnos.models.entity;
 import java.util.Date;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="alumnos")
@@ -10,8 +11,9 @@ public class Alumno {
 
     @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
 	private Long id;
+    
+    @NotEmpty
 	private String nombre;
 	private String apellido;
 	private String email;
