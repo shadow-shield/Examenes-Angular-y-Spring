@@ -16,8 +16,8 @@ public class AlumnoController extends GController<Alumno, AlumnoService> {
   
 
 
-   @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody Alumno alumno) {
+   @PutMapping("/updatealumno/{id}")
+    public ResponseEntity<?> updateAlumno(@PathVariable Long id, @RequestBody Alumno alumno) {
        Optional<Alumno> alumno1 = service.findById(id);
 
        if (alumno1.isEmpty()) {
@@ -29,6 +29,12 @@ public class AlumnoController extends GController<Alumno, AlumnoService> {
        alumDb.setApellido(alumno.getApellido());
        alumDb.setEmail(alumno.getEmail());
        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(alumDb));
+   }
+   
+   @GetMapping("/fltraralumno/{term}")
+   public ResponseEntity<?>filtrar(@PathVariable String term){
+	   return ResponseEntity.ok(service.findByNombreOrApellido(term));
+	   
    }
 
    
