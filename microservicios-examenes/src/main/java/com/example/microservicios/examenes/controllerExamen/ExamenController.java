@@ -34,6 +34,8 @@ public class ExamenController extends GController<Examen,ExamenService> {
 		.filter(pdb->!examen.getPreguntas().contains(pdb))
 		.forEach(examenDb::removePregunta);
 		
+		examenDb.setPreguntas(examen.getPreguntas());
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(examenDb));
 	}
 	
