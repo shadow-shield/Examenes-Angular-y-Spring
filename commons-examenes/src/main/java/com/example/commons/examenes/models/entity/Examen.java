@@ -2,7 +2,8 @@ package com.example.commons.examenes.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,9 @@ public class Examen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotEmpty
+    @Size(min = 4,max = 20)
     private String nombre;
 
     @Temporal(TemporalType.TIMESTAMP)
