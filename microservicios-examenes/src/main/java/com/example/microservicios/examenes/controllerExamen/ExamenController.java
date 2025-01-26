@@ -1,5 +1,6 @@
 package com.example.microservicios.examenes.controllerExamen;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.commons.examenes.models.entity.Examen;
-
 import com.example.microservicios.examenes.services.ExamenService;
 import com.example.microservicios.genericos.Gcontroller.GController;
 
@@ -31,6 +31,8 @@ public class ExamenController extends GController<Examen, ExamenService> {
 			return this.validar(result);
 
 		}
+		
+	
 
 		Optional<Examen> o = service.findById(id);
 		if (o.isPresent()) {
@@ -55,7 +57,7 @@ public class ExamenController extends GController<Examen, ExamenService> {
 
 	@GetMapping("/asignaturas")
 	public ResponseEntity<?> listarAsignaturas() {
-		return ResponseEntity.ok(service.findAllAsignaturas());
+		return ResponseEntity.ok(service.finnAllAsignatura());
 
 	}
 

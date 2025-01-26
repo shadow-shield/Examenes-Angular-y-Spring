@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.commons.examenes.models.entity.Asignatura;
 import com.example.commons.examenes.models.entity.Examen;
-import com.example.microservicios.examenes.models.repositorioExamen.AsignaturaRepositorio;
+import com.example.microservicios.examenes.models.repositorioExamen.AsignaturaReposi;
 import com.example.microservicios.examenes.models.repositorioExamen.ExamenRepositorio;
 import com.example.microservicios.genericos.Gservices.ServiciosImple;
 
@@ -18,8 +18,9 @@ import com.example.microservicios.genericos.Gservices.ServiciosImple;
 @Service
 public class ExamenImplemen extends ServiciosImple<Examen,ExamenRepositorio> implements ExamenService {
 
+
 	@Autowired
-	private AsignaturaRepositorio asignarutarepo;
+	private AsignaturaReposi reposiasi;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -28,11 +29,10 @@ public class ExamenImplemen extends ServiciosImple<Examen,ExamenRepositorio> imp
 	}
 
 	@Override
-	@Transactional(readOnly=true)
-	public Iterable<Asignatura> findAllAsignaturas() {
-		
-	 return asignarutarepo.findAll();
+	public Iterable<Asignatura> finnAllAsignatura() {
+		return reposiasi.findAll();
 	}
+
 
 	
 

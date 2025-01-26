@@ -74,4 +74,6 @@ public class GController <E, S extends ServiceGenericos<E>>{
 	   return ResponseEntity.badRequest().body(errores);
    }
 
+
+
 }

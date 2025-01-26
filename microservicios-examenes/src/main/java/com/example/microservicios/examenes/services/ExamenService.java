@@ -10,6 +10,8 @@ public interface ExamenService extends ServiceGenericos<Examen> {
 	
 	public List<Examen>findByNombre(String term);
 	
-	public Iterable<Asignatura>findAllAsignaturas();
+	public Iterable<Asignatura> finnAllAsignatura();
+	
+	
 
 }

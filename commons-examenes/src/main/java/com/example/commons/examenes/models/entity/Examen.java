@@ -1,13 +1,16 @@
 package com.example.commons.examenes.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @Entity
 @Table(name = "examenes")
@@ -28,10 +31,8 @@ public class Examen {
 	@OneToMany(mappedBy = "examen",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pregunta> preguntas;
 
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Asignatura asignatura;
-	
 	
 	public Examen() {
 		this.preguntas=new ArrayList<>();
@@ -86,7 +87,6 @@ public class Examen {
 	}
 	
 	
-	
 	public Asignatura getAsignatura() {
 		return asignatura;
 	}
@@ -95,7 +95,7 @@ public class Examen {
 	public void setAsignatura(Asignatura asignatura) {
 		this.asignatura = asignatura;
 	}
-
+	
 
 	@Override
 	public boolean equals(Object obj) {

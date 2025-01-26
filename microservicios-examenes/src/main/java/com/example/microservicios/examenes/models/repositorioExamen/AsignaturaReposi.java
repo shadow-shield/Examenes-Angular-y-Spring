@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.commons.examenes.models.entity.Asignatura;
 
-public interface AsignaturaRepositorio  extends CrudRepository<Asignatura, Long>{
+public interface AsignaturaReposi extends CrudRepository<Asignatura, Long> {
 
 }
