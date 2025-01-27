@@ -1,6 +1,6 @@
 package com.example.microservicios.cursos.models.entity;
 
-import jakarta.persistence.*;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +8,18 @@ import java.util.List;
 
 import com.example.commons.examenes.models.entity.Examen;
 import com.example.microservicios.genericAlumnos.models.entity.Alumno;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="cursos")
@@ -21,7 +33,7 @@ public class Cursos {
 
     @Column(name="create_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+	private Date createAt;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Alumno> alumnos;

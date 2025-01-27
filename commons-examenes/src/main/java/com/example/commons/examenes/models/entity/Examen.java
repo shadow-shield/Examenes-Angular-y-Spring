@@ -34,6 +34,9 @@ public class Examen {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Asignatura asignatura;
 	
+	@Transient
+	private boolean respondido;
+	
 	public Examen() {
 		this.preguntas=new ArrayList<>();
 	}
@@ -96,6 +99,17 @@ public class Examen {
 		this.asignatura = asignatura;
 	}
 	
+	
+
+	public boolean isRespondido() {
+		return respondido;
+	}
+
+
+	public void setRespondido(boolean respondido) {
+		this.respondido = respondido;
+	}
+
 
 	@Override
 	public boolean equals(Object obj) {
