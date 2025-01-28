@@ -11,7 +11,7 @@ public interface RespuestaRepositorio extends CrudRepository<Respuesta, Long> {
 	public Iterable<Respuesta>findRespuestaByAlumnoByExamen(Long alumnoId,Long examenId);
 	
 	@Query("select e.id from Respuesta r join r.alumno a join r.pregunta p join p.examen e where a.id=?1 group by e.id")
-	public Iterable<Long>finExamenesIdsConRespuestasByAlumno(Long alumnoId);
+	public Iterable<Long>findExamenesIdsConRespuestasByAlumno(Long alumnoId);
 	
 
 }

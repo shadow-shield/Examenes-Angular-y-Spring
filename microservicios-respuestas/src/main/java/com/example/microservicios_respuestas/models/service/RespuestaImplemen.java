@@ -30,9 +30,8 @@ public class RespuestaImplemen implements RespuestaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Iterable<Long> finExamenesIdsConRespuestasByAlumno(Long alumnoId) {
-	
-		return respuesta.finExamenesIdsConRespuestasByAlumno(alumnoId);
+	public Iterable<Long> findExamenesIdsConRespuestasByAlumno(Long alumnoId) {
+		return respuesta.findExamenesIdsConRespuestasByAlumno(alumnoId);
 	}
 
 }

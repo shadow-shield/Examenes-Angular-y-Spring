@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableFeignClients(basePackages = "com.example.microservicios.cursos.models.Clients")
+
+@EnableFeignClients
 @SpringBootApplication
 @EntityScan({"com.example.microservicios.genericAlumnos.models.entity",
              "com.example.microservicios.cursos.models.entity",

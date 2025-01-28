@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.microservicios.cursos.models.Clients.RespuestasFeignClients;
+import com.example.microservicios.cursos.models.clients.RespuestaFeignClient;
 import com.example.microservicios.cursos.models.entity.Cursos;
 import com.example.microservicios.cursos.models.repositorioCurso.CursoRepositorio;
 import com.example.microservicios.genericos.Gservices.ServiciosImple;
@@ -15,7 +15,7 @@ import com.example.microservicios.genericos.Gservices.ServiciosImple;
 public class CursosImplemen extends ServiciosImple<Cursos, CursoRepositorio> implements CursosServices {
 
 	@Autowired
-	 private RespuestasFeignClients respuestasFeigClients;
+	private RespuestaFeignClient respuesta;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -24,8 +24,9 @@ public class CursosImplemen extends ServiciosImple<Cursos, CursoRepositorio> imp
 	}
 
 	@Override
-	public Iterable<Long> respuestaExamen(Long alumnoId) {
-		return respuestasFeigClients.respuestaExamen(alumnoId);
+	@Transactional(readOnly=true)
+	public Iterable<Long> obtenerExamenesIdsConRespuestas(Long alumnoId) {
+		return respuesta.obtenerExamenesIdsConRespuestas(alumnoId);
 	}
 
 	

@@ -29,14 +29,15 @@ public class RespuestaController {
 	}
 	
 	@GetMapping("/alumno/{alumnoId}/examen/{examenId}")
-	public ResponseEntity<?> obtenerRpespuuestasporAlumno(@PathVariable Long alumnoId,@PathVariable Long examenId) {
+	public ResponseEntity<?> obtenerRespuuestasporAlumno(@PathVariable Long alumnoId,@PathVariable Long examenId) {
 		Iterable<Respuesta>respuestas=service.findRespuestaByAlumnoByExamen(alumnoId, examenId);
 		return ResponseEntity.ok(respuestas);
 	}
 	
-	@GetMapping("/alumno/{alumnoId}/examenesrespondidos")
+	
+	@GetMapping("/alumno/{alumnoId}/examenes")
 	public ResponseEntity<?> obtenerExamenesIdsConRespuestas(@PathVariable Long alumnoId) {
-		Iterable<Long>examendesIds=service.finExamenesIdsConRespuestasByAlumno(alumnoId);
+		Iterable<Long>examendesIds=service.findExamenesIdsConRespuestasByAlumno(alumnoId);
 		return ResponseEntity.ok(examendesIds);
 	}
 	

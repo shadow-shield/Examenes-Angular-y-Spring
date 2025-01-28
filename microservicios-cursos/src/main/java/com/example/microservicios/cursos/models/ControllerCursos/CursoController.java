@@ -25,46 +25,44 @@ import com.example.microservicios.genericos.Gcontroller.GController;
 @RestController
 @RequestMapping("/api/curso")
 public class CursoController extends GController<Cursos, CursosServices> {
-	
+
 	@Value("${config.balanceador.test}")
 	private String balanceadorTest;
-	
+
 	@GetMapping("/balanceador")
 	public ResponseEntity<?> balanceador() {
-		Map<String, Object> response= new HashMap<String, Object>();
-		response.put("balanceador",balanceadorTest);
-		response.put("cursos",service.findAll());
-	
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("balanceador", balanceadorTest);
+		response.put("cursos", service.findAll());
+
 		return ResponseEntity.ok(response);
 	}
-	
 
-    @PutMapping("/api/cursos/{id}")
-    public ResponseEntity<?> editar(@RequestBody Cursos curso, @PathVariable Long id) {
-        Optional<Cursos> o = this.service.findById(id);
-        if (!o.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        Cursos dbCurso = o.get();
-        dbCurso.setNombre(curso.getNombre());
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dbCurso));
+	@PutMapping("/api/cursos/{id}")
+	public ResponseEntity<?> editar(@RequestBody Cursos curso, @PathVariable Long id) {
+		Optional<Cursos> o = this.service.findById(id);
+		if (!o.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		Cursos dbCurso = o.get();
+		dbCurso.setNombre(curso.getNombre());
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dbCurso));
 
+	}
 
-    }
-
-    @PutMapping("/api/cursos/{id}/asignaralumnos")
-    public ResponseEntity<?> asignarAlumnos(@RequestBody List<Alumno> alumnos, @PathVariable Long id) {
-        Optional<Cursos> o = this.service.findById(id);
-        if (!o.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
+	@PutMapping("/api/cursos/{id}/asignaralumnos")
+	public ResponseEntity<?> asignarAlumnos(@RequestBody List<Alumno> alumnos, @PathVariable Long id) {
+		Optional<Cursos> o = this.service.findById(id);
+		if (!o.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
 		Cursos dbCurso = o.get();
 		alumnos.forEach(alumno -> {
 			dbCurso.addAlumno(alumno);
 		});
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dbCurso));
-    }
-    
+	}
+
 	@PutMapping("/api/cursos/{id}/eliminaralumnos")
 	public ResponseEntity<?> eliminarAlumnos(@RequestBody Alumno alumno, @PathVariable Long id) {
 		Optional<Cursos> o = this.service.findById(id);
@@ -75,38 +73,37 @@ public class CursoController extends GController<Cursos, CursosServices> {
 		dbCurso.removeAlumno(alumno);
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dbCurso));
 	}
-	
+
 	@GetMapping("/api/cursos/alumno/{id}")
-	public ResponseEntity<?>buscarAlumnoId(@PathVariable Long id){
-		Cursos curso= service.findCursoByAlumnoId(id);
-		
+	public ResponseEntity<?> buscarAlumnoId(@PathVariable Long id) {
+		Cursos curso = service.findCursoByAlumnoId(id);
 		if(curso!=null) {
-			List<Long> examendesIds=(List<Long>) service.respuestaExamen(id);
-			List<Examen>examenes=curso.getExamenes().stream().map(examen->{
+			List<Long>examendesIds=(List<Long>) service.obtenerExamenesIdsConRespuestas(id);
+			List<Examen>examenes = curso.getExamenes().stream().map(examen ->{
 				if(examendesIds.contains(examen.getId())) {
 					examen.setRespondido(true);
 				}
 				return examen;
-			}).collect(Collectors.toList());
+			} ).collect(Collectors.toList());
 			curso.setExamenes(examenes);
 		}
 		
 		return ResponseEntity.ok(curso);
 	}
-	
+
 	@PutMapping("/api/cursos/{id}/asignarexamenes")
-    public ResponseEntity<?> asignarExamenes(@RequestBody List<Examen> examenes, @PathVariable Long id) {
-        Optional<Cursos> o = this.service.findById(id);
-        if (!o.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
+	public ResponseEntity<?> asignarExamenes(@RequestBody List<Examen> examenes, @PathVariable Long id) {
+		Optional<Cursos> o = this.service.findById(id);
+		if (!o.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
 		Cursos dbCurso = o.get();
 		examenes.forEach(examen -> {
 			dbCurso.addExamen(examen);
 		});
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dbCurso));
-    }
-	
+	}
+
 	@PutMapping("/api/cursos/{id}/eliminarexamen")
 	public ResponseEntity<?> eliminarExamen(@RequestBody Examen examen, @PathVariable Long id) {
 		Optional<Cursos> o = this.service.findById(id);
@@ -117,8 +114,5 @@ public class CursoController extends GController<Cursos, CursosServices> {
 		dbCurso.removeExamenes(examen);
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dbCurso));
 	}
-
-	
-	
 
 }
