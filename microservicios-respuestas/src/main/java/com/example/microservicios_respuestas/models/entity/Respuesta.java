@@ -3,6 +3,7 @@ package com.example.microservicios_respuestas.models.entity;
 import com.example.commons.examenes.models.entity.Pregunta;
 import com.example.microservicios.genericAlumnos.models.entity.Alumno;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "respuestas")
@@ -20,8 +22,12 @@ public class Respuesta {
 	private Long id;
 	private String texto;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@ManyToOne(fetch = FetchType.LAZY)
+	@Transient
 	private Alumno alumno;
+	
+	@Column(name="alumno_id")
+	private Long alumnoId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pregunta pregunta;
@@ -50,6 +56,14 @@ public class Respuesta {
 	public void setPregunta(Pregunta pregunta) {
 		this.pregunta = pregunta;
 	}
+	public Long getAlumnoId() {
+		return alumnoId;
+	}
+	public void setAlumnoId(Long alumno_Id) {
+		this.alumnoId = alumno_Id;
+	}
+	
+	
 	
 	
 	

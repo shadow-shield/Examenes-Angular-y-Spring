@@ -22,17 +22,17 @@ public class GController <E, S extends ServiceGenericos<E>>{
     @Autowired
     protected S service;
   
-   @GetMapping("/generic")
-    public ResponseEntity<Iterable<E>> getUsers() {
+   @GetMapping()
+    public ResponseEntity<?> getUsers() {
        return ResponseEntity.ok().body(service.findAll());
    }
    
    @GetMapping("/pagina")
-   public ResponseEntity<Iterable<E>> getUsersPorPaginas(Pageable pageable) {
+   public ResponseEntity<?> getUsersPorPaginas(Pageable pageable) {
       return ResponseEntity.ok().body(service.findAll(pageable));
   }
 
-   @GetMapping("/genericget/{id}")
+   @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
        Optional<E> a = service.findById(id);
        if (a.isEmpty()) {
@@ -42,7 +42,7 @@ public class GController <E, S extends ServiceGenericos<E>>{
    }
    
    
-   @PostMapping("/genericadd")
+   @PostMapping()
 	public ResponseEntity<?> createUser(@Valid @RequestBody E entity,BindingResult result) {
 	   if(result.hasErrors()) {
 		   return this.validar(result);
@@ -54,7 +54,7 @@ public class GController <E, S extends ServiceGenericos<E>>{
 
    }
 
-   @DeleteMapping("/genericdele/{id}")
+   @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
        Optional<E> entityDB = service.findById(id);
        if (entityDB.isEmpty()) {

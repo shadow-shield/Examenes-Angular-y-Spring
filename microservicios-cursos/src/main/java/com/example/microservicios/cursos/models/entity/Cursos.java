@@ -8,7 +8,9 @@ import java.util.List;
 
 import com.example.commons.examenes.models.entity.Examen;
 import com.example.microservicios.genericAlumnos.models.entity.Alumno;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,6 +22,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="cursos")
@@ -34,8 +37,13 @@ public class Cursos {
     @Column(name="create_at")
     @Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+    
+    @JsonIgnoreProperties(value= {"curso"},allowSetters = true)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "curso",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CursoAlumno> cursosAlumnos;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	//@OneToMany(fetch = FetchType.LAZY)
+    @Transient
 	private List<Alumno> alumnos;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -48,6 +56,7 @@ public class Cursos {
 	public Cursos() {
 		this.alumnos=new ArrayList<>();
 		this.examenes=new ArrayList<>();
+		this.cursosAlumnos=new ArrayList<>();
 	}
 
 
@@ -104,6 +113,24 @@ public class Cursos {
 	public void removeExamenes(Examen examene) {
 		this.examenes.remove(examene);
 	}
+
+	public List<CursoAlumno> getCursosAlumnos() {
+		return cursosAlumnos;
+	}
+
+	public void setCursosAlumnos(List<CursoAlumno> cursosAlumnos) {
+		this.cursosAlumnos = cursosAlumnos;
+	}
+	
+	public void addCursosAlumno(CursoAlumno cursosAlumnos) {
+		this.cursosAlumnos.add(cursosAlumnos);
+	}
+	
+	public void removeCursosAlumno(CursoAlumno cursosAlumnos) {
+		this.cursosAlumnos.remove(cursosAlumnos);
+	}
+	
+	
 	
 	
 
