@@ -17,11 +17,21 @@ import com.example.microservicios.genericos.Gcontroller.GController;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/examen")
 public class ExamenController extends GController<Examen, ExamenService> {
+	
+	@GetMapping("/respondidosporpreguntas")
+	public ResponseEntity<?>obtenerExamenesIdsPorPorPreguntasIdsRespondidas(@RequestParam List<Long> preguntaIds) {
+		
+		return ResponseEntity.ok().body(service.findExamenesIdsConRespuestasByPreguntaIds(preguntaIds));
+	}
+	
 
 	@PutMapping("updatexamen/{id}")
 	public ResponseEntity<?> updateExamen(@Valid @PathVariable Long id, @RequestBody Examen examen,
@@ -31,8 +41,6 @@ public class ExamenController extends GController<Examen, ExamenService> {
 			return this.validar(result);
 
 		}
-		
-	
 
 		Optional<Examen> o = service.findById(id);
 		if (o.isPresent()) {

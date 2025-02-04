@@ -1,41 +1,36 @@
 package com.example.microservicios_respuestas.models.entity;
 
+import org.springframework.data.annotation.Id;
+//import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.example.commons.examenes.models.entity.Pregunta;
 import com.example.microservicios.genericAlumnos.models.entity.Alumno;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
-@Entity
-@Table(name = "respuestas")
+
+@Document(collection = "respuestas")
 public class Respuesta {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+	private String id;
 	private String texto;
-	
-	//@ManyToOne(fetch = FetchType.LAZY)
-	@Transient
+
+	//@Transient
 	private Alumno alumno;
 	
-	@Column(name="alumno_id")
+
 	private Long alumnoId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@Transient
 	private Pregunta pregunta;
 	
-	public Long getId() {
+	private Long preguntaId;
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getTexto() {
@@ -62,6 +57,14 @@ public class Respuesta {
 	public void setAlumnoId(Long alumno_Id) {
 		this.alumnoId = alumno_Id;
 	}
+	public Long getPreguntaId() {
+		return preguntaId;
+	}
+	public void setPreguntaId(Long preguntad) {
+		this.preguntaId = preguntad;
+	}
+	
+	
 	
 	
 	

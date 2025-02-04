@@ -12,6 +12,8 @@ public interface ExamenService extends ServiceGenericos<Examen> {
 	
 	public Iterable<Asignatura> finnAllAsignatura();
 	
+	public Iterable<Long>findExamenesIdsConRespuestasByPreguntaIds(Iterable<Long> preguntaIds);
+	
 	
 
 }

@@ -29,8 +29,15 @@ public class ExamenImplemen extends ServiciosImple<Examen,ExamenRepositorio> imp
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Iterable<Asignatura> finnAllAsignatura() {
 		return reposiasi.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Iterable<Long> findExamenesIdsConRespuestasByPreguntaIds(Iterable<Long> preguntaIds) {
+		return repositoryGe.findExamenesIdsConRespuestasByPreguntaIds(preguntaIds);
 	}
 
 
