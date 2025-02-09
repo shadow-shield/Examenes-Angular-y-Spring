@@ -3,7 +3,7 @@ package com.example.commons.examenes.models.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -26,11 +26,11 @@ public class Asignatura {
 
 	private String nombre;
 
-	@JsonIgnoreProperties(value = {"hijos"})
+	@JsonIgnoreProperties(value = {"hijos","handler","hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Asignatura padre;
 
-	@JsonIgnoreProperties(value = {"padre"}, allowGetters = true)
+	@JsonIgnoreProperties(value = {"padre","handler","hibernateLazyInitializer"}, allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "padre", cascade = CascadeType.ALL)
 	private List<Asignatura> hijos;
 	

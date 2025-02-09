@@ -47,7 +47,7 @@ public class AlumnoController extends GController<Alumno, AlumnoService> {
 
 	}
 
-	@PutMapping("/updatealumno/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateAlumno(@Valid @RequestBody Alumno alumno, @PathVariable Long id,
 			BindingResult result) {
 

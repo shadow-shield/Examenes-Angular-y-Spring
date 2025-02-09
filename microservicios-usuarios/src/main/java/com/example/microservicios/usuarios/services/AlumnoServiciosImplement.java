@@ -8,34 +8,34 @@ import com.example.microservicios.usuarios.models.repositorio.AlumnoReposotorio;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
-public class AlumnoServiciosImplement extends ServiciosImple<Alumno,AlumnoReposotorio> implements AlumnoService{
+public class AlumnoServiciosImplement extends ServiciosImple<Alumno, AlumnoReposotorio> implements AlumnoService {
 
-	
 	@Autowired
 	private CursoFeignClient clientCurso;
-	
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<Alumno> findByNombreOrApellido(String nombre) {
 		return repositoryGe.findByNombreOrApellido(nombre);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Iterable<Alumno> finAllById(Iterable<Long> ids) {
-		
+
 		return repositoryGe.findAllById(ids);
 	}
 
 	@Override
 	public void eliminarCursoAlumnoPorId(Long id) {
 		clientCurso.eliminarCursoAlumnoPorId(id);
-		
+
 	}
 
 	@Override
@@ -44,9 +44,19 @@ public class AlumnoServiciosImplement extends ServiciosImple<Alumno,AlumnoReposo
 		super.delete(id);
 		this.eliminarCursoAlumnoPorId(id);
 	}
-	
-	
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<Alumno> findAll() {
+		return repositoryGe.findAllByOrderByIdAsc();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Alumno> findAll(Pageable pageable) {
+		return repositoryGe.findAllByOrderByIdAsc(pageable);
+	}
+
 	
 
-   
 }

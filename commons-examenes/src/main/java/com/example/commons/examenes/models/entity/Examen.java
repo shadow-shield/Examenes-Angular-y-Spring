@@ -1,10 +1,25 @@
 package com.example.commons.examenes.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -31,14 +46,21 @@ public class Examen {
 	@OneToMany(mappedBy = "examen",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pregunta> preguntas;
 
+	@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Asignatura asignatura;
+	@NotNull
+	private Asignatura asignaturapadre;
+	
+	@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private Asignatura asignaturahijo;
 	
 	@Transient
 	private boolean respondido;
 	
 	public Examen() {
-		this.preguntas=new ArrayList<>();
+		this.preguntas = new ArrayList<>();
 	}
 
 
@@ -89,17 +111,26 @@ public class Examen {
 
 	}
 	
-	
-	public Asignatura getAsignatura() {
-		return asignatura;
+
+	public Asignatura getAsignaturapadre() {
+		return asignaturapadre;
 	}
 
 
-	public void setAsignatura(Asignatura asignatura) {
-		this.asignatura = asignatura;
+	public void setAsignaturapadre(Asignatura asignaturapadre) {
+		this.asignaturapadre = asignaturapadre;
 	}
-	
-	
+
+
+	public Asignatura getAsignaturahijo() {
+		return asignaturahijo;
+	}
+
+
+	public void setAsignaturahijo(Asignatura asignaturahijo) {
+		this.asignaturahijo = asignaturahijo;
+	}
+
 
 	public boolean isRespondido() {
 		return respondido;
@@ -109,6 +140,8 @@ public class Examen {
 	public void setRespondido(boolean respondido) {
 		this.respondido = respondido;
 	}
+	
+	
 
 
 	@Override
